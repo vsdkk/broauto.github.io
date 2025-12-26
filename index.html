@@ -186,7 +186,7 @@
 
         .logo-img {
             display: block;
-            height: 50px; /* Розмір логотипу в шапці */
+            height: 80px; /* ЗБІЛЬШЕНО: Розмір логотипу в шапці */
             width: auto;
             max-width: 100%; 
             object-fit: contain;
@@ -204,6 +204,8 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
+            /* Added padding top to push visual center down slightly, preventing overlap */
+            padding-top: 80px; 
         }
 
         /* Video Styles */
@@ -215,10 +217,9 @@
             height: 100%;
             object-fit: cover;
             z-index: 0;
-            opacity: 0.8; /* Slightly darkened naturally */
+            opacity: 0.8;
         }
 
-        /* Complex Gradient Overlay - Adjusted Z-Index to sit ON TOP of video */
         .hero::before {
             content: '';
             position: absolute;
@@ -226,17 +227,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* 1. Затемнення знизу.
-               2. Повне легке затемнення відео.
-               3. Червоний градієнт зверху.
-            */
             background: 
                 linear-gradient(to top, #050505 0%, rgba(5,5,5,0.8) 30%, rgba(5,5,5,0.4) 100%),
                 radial-gradient(circle at 50% -20%, rgba(211, 47, 47, 0.4) 0%, transparent 60%);
             z-index: 1;
         }
 
-        /* Grid Texture with Blend Mode */
         .grid-overlay {
             position: absolute;
             top: 0;
@@ -272,7 +268,6 @@
             letter-spacing: -0.02em;
         }
         
-        /* Two-tone text effect */
         .hero h1 span.white-text {
             display: block;
             color: var(--white);
@@ -281,7 +276,6 @@
 
         .hero h1 span.red-text {
             color: var(--primary);
-            /* Optional: Gradient Text */
             background: linear-gradient(135deg, #ff5252, #D32F2F);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -295,7 +289,7 @@
             justify-content: center;
             gap: 20px;
             font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.85); /* Tweak for better contrast */
+            color: rgba(255, 255, 255, 0.85);
             margin-bottom: 50px;
             font-weight: 500;
             letter-spacing: 0.1em;
@@ -583,6 +577,11 @@
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;
+            }
+            
+            /* Make logo smaller on mobile to prevent overlap */
+            .logo-img {
+                height: 50px; /* Збільшено з 40px до 50px для мобільних */
             }
             
             .form-row {
