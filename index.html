@@ -168,31 +168,32 @@
             left: 0;
             width: 100%;
             padding: 20px 0;
-            z-index: 10;
+            z-index: 100; /* Increased z-index to stay on top */
         }
         
         /* Fixed Header Container for Logo Alignment */
         header .container {
             display: flex;
             align-items: center;
-            justify-content: flex-start; /* Вирівнюємо ліворуч (Left aligned) */
+            justify-content: flex-start; /* ПОВЕРНУТО ВЛІВО (Left aligned) */
         }
 
-        /* CSS for Image Logo - Improved Stability */
+        /* CSS for Image Logo */
         .logo-link {
             display: inline-block;
-            line-height: 0; /* Прибирає зайві відступи знизу */
+            line-height: 0;
         }
 
         .logo-img {
             display: block;
-            height: 60px; /* Фіксована висота для стабільності */
+            height: 50px; /* Розмір логотипу в шапці */
             width: auto;
-            max-width: 100%; /* Щоб не вилазило на мобільних */
+            max-width: 100%; 
             object-fit: contain;
+            transition: height 0.3s ease;
         }
 
-        /* --- Hero Section (Clean & Bold with Video) --- */
+        /* --- Hero Section --- */
         .hero {
             height: 100vh;
             min-height: 100svh;
@@ -915,7 +916,8 @@
             <!-- Image Logo Placeholder for Footer -->
             <a href="#" class="logo-link" style="display: inline-block; margin-bottom: 15px;">
                 <!-- ЗАМІНІТЬ ЦЕ ПОСИЛАННЯ НА ВАШЕ ЛОГО -->
-                <img src="https://placehold.co/200x50/transparent/white?text=ВАШЕ+ЛОГО" alt="BROAUTO Logo" class="logo-img" style="margin: 0 auto;">
+                <!-- ТУТ ЛОГОТИП ЗБІЛЬШЕНО (height: 90px) -->
+                <img src="https://placehold.co/200x50/transparent/white?text=ВАШЕ+ЛОГО" alt="BROAUTO Logo" class="logo-img" style="margin: 0 auto; height: 90px;">
             </a>
             
             <div class="footer-slogan">Швидко. Точно. <span>Надійно.</span></div>
