@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BROAUTO — Точний підбір автозапчастин</title>
+    <meta name="description" content="BROAUTO: Точний підбір автозапчастин під ваше авто. Швидко. Точно. Надійно.">
+    
+    <!-- Google Fonts: Inter for modern, clean look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS Variables --- */
+        :root {
+            --primary: #D32F2F;
+            --primary-glow: #ff5252;
+            --primary-dark: #b71c1c;
+            --black: #050505;
+            --dark-gray: #1a1a1a;
+            --light-gray: #f4f4f4;
+            --white: #FFFFFF;
+            --text-dark: #111111;
+            --text-light: #FFFFFF;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        /* --- Reset & Base --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            /* Hide default cursor only on devices with fine pointer (mouse) */
+        }
+        
+        @media (pointer: fine) {
+            body {
+                cursor: none;
+            }
+        }
+
+        ul { list-style: none; }
+        a { text-decoration: none; color: inherit; }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* --- Custom Cursor Styles --- */
+        .cursor-dot,
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+            display: none; /* Hidden by default */
+        }
+        
+        @media (pointer: fine) {
+            .cursor-dot, .cursor-outline {
+                display: block;
+            }
+        }
+
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(100, 100, 100, 0.3);
+            transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+        }
+
+        /* Hover States for Cursor */
+        body.hover-active .cursor-outline {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(211, 47, 47, 0.05);
+            border-color: var(--primary);
+        }
+        
+        body.hover-active .cursor-dot {
+            width: 12px;
+            height: 12px;
+            background-color: var(--primary-glow);
+        }
+
+        /* --- Components --- */
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--white);
+            padding: 20px 45px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer; /* Fallback */
+            transition: var(--transition);
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(211, 47, 47, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(211, 47, 47, 0.5);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            box-shadow: none;
+            padding: 16px 32px;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-dark);
+        }
+
+        /* --- Header --- */
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px 0;
+            z-index: 10;
+        }
+
+        /* CSS for Image Logo */
+        .logo-img {
+            display: block;
+            max-height: 50px; /* Adjust height as needed */
+            width: auto;
+            object-fit: contain;
+        }
+
+        /* --- Hero Section (Clean & Bold with Video) --- */
+        .hero {
+            height: 100vh;
+            min-height: 100svh;
+            background-color: #050505;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Video Styles */
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            opacity: 0.8; /* Slightly darkened naturally */
+        }
+
+        /* Complex Gradient Overlay - Adjusted Z-Index to sit ON TOP of video */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* 1. Затемнення знизу.
+               2. Повне легке затемнення відео.
+               3. Червоний градієнт зверху.
+            */
+            background: 
+                linear-gradient(to top, #050505 0%, rgba(5,5,5,0.8) 30%, rgba(5,5,5,0.4) 100%),
+                radial-gradient(circle at 50% -20%, rgba(211, 47, 47, 0.4) 0%, transparent 60%);
+            z-index: 1;
+        }
+
+        /* Grid Texture with Blend Mode */
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(circle at center, black 0%, transparent 100%);
+            -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 100%);
+            z-index: 2;
+            mix-blend-mode: overlay;
+            opacity: 0.6;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            max-width: 900px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 7vw, 6rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+        
+        /* Two-tone text effect */
+        .hero h1 span.white-text {
+            display: block;
+            color: var(--white);
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .hero h1 span.red-text {
+            color: var(--primary);
+            /* Optional: Gradient Text */
+            background: linear-gradient(135deg, #ff5252, #D32F2F);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+            text-shadow: 0 10px 30px rgba(211, 47, 47, 0.2);
+        }
+
+        .tagline {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.85); /* Tweak for better contrast */
+            margin-bottom: 50px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .tagline .separator {
+            width: 6px;
+            height: 6px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        /* --- Features Section --- */
+        .features {
+            padding: 100px 0;
+            background-color: var(--light-gray);
+            position: relative;
+            z-index: 2;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            transition: var(--transition);
+            text-align: center;
+            border-bottom: 4px solid transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            border-bottom-color: var(--primary);
+        }
+
+        .icon-box {
+            width: 80px;
+            height: 80px;
+            background: rgba(168, 23, 31, 0.05);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover .icon-box {
+            background: var(--primary);
+            color: var(--white);
+            transform: rotate(10deg);
+            border-radius: 50%;
+        }
+
+        .icon-box svg {
+            width: 36px;
+            height: 36px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: var(--black);
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* --- Location Section --- */
+        .location-section {
+            padding: 80px 0 0 0;
+            background-color: var(--white);
+        }
+
+        .location-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            background-color: var(--dark-gray);
+            border-radius: 30px;
+            overflow: hidden;
+            color: var(--white);
+            box-shadow: var(--shadow);
+        }
+
+        .location-info {
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+        }
+        
+        .location-info h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            color: var(--white);
+        }
+
+        .location-details {
+            margin-bottom: 40px;
+        }
+
+        .location-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+
+        .location-item svg {
+            color: var(--primary);
+            margin-right: 20px;
+            min-width: 24px;
+            margin-top: 5px;
+        }
+        
+        .location-item strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .location-item p {
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+
+        .map-frame-container {
+            width: 100%;
+            height: 100%;
+            min-height: 450px;
+            background-color: #333;
+        }
+        
+        .map-frame-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+
+        /* --- Form Section --- */
+        .request-section {
+            padding: 120px 0;
+            background-color: var(--white);
+            position: relative;
+        }
+
+        .form-wrapper {
+            max-width: 650px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            border: 1px solid #f0f0f0;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .form-header h2 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+            color: var(--black);
+        }
+
+        .form-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--dark-gray);
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 16px 20px;
+            font-family: inherit;
+            font-size: 1rem;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            background-color: #f9f9f9;
+            transition: var(--transition);
+            color: var(--black);
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: var(--white);
+            box-shadow: 0 0 0 4px rgba(211, 47, 47, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            margin-top: 15px;
+            font-size: 1.2rem;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            color: #2e7d32;
+            background-color: #e8f5e9;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 25px;
+            font-weight: 600;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: #050505;
+            color: var(--white);
+            padding: 60px 0;
+            text-align: center;
+            border-top: 4px solid var(--primary);
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .footer-slogan {
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--white);
+            margin-bottom: 10px;
+        }
+        
+        .footer-slogan span {
+            color: var(--primary);
+        }
+
+        .footer-note {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 15px;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .form-wrapper {
+                padding: 30px 20px;
+            }
+            
+            .features {
+                padding: 60px 0;
+            }
+            
+            .location-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .location-info {
+                padding: 40px 25px;
+            }
+            
+            .request-section {
+                padding: 60px 0;
+            }
+            
+            .map-frame-container {
+                min-height: 300px;
+            }
+            
+            .tagline {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .tagline .separator {
+                display: none;
+            }
+        }
+
+        /* --- New Animations --- */
+        /* Pulsing Button Effect */
+        @keyframes pulse-red {
+            0% {
+                box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 20px rgba(211, 47, 47, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(211, 47, 47, 0);
+            }
+        }
+
+        .hero .btn {
+            animation: pulse-red 2s infinite;
+        }
+
+        /* --- Scroll Mouse Indicator --- */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        
+        .scroll-indicator:hover {
+            opacity: 1;
+        }
+
+        .mouse {
+            width: 26px;
+            height: 42px;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .wheel {
+            width: 4px;
+            height: 8px;
+            background-color: var(--primary);
+            border-radius: 2px;
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scroll-wheel 1.5s infinite;
+        }
+
+        .arrows span {
+            display: block;
+            width: 10px;
+            height: 10px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.7);
+            border-right: 2px solid rgba(255, 255, 255, 0.7);
+            transform: rotate(45deg);
+            margin: -5px auto 0;
+            animation: scroll-arrow 1.5s infinite;
+        }
+
+        .arrows span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .arrows span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes scroll-wheel {
+            0% { top: 8px; opacity: 1; }
+            100% { top: 24px; opacity: 0; }
+        }
+
+        @keyframes scroll-arrow {
+            0% { opacity: 0; transform: rotate(45deg) translate(-2px, -2px); }
+            50% { opacity: 1; }
+            100% { opacity: 0; transform: rotate(45deg) translate(2px, 2px); }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Custom Cursor Elements -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <!-- Image Logo Placeholder -->
+            <a href="#" class="logo-link">
+                <!-- ЗАМІНІТЬ ЦЕ ПОСИЛАННЯ НА ВАШЕ ЛОГО -->
+                <img src="https://placehold.co/200x50/transparent/white?text=ВАШЕ+ЛОГО" alt="BROAUTO Logo" class="logo-img">
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section (Video Background) -->
+    <section class="hero">
+        <!-- Video Background Element -->
+        <video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1542282088-fe8426682b8f?q=80&w=1887&auto=format&fit=crop">
+            <!-- Це посилання на стокове відео. Ви можете замінити його на своє (наприклад, з блимаючими фарами) -->
+            <source src="https://videos.pexels.com/video-files/3045163/3045163-hd_1920_1080_30fps.mp4" type="video/mp4">
+            Ваш браузер не підтримує відео.
+        </video>
+        
+        <div class="grid-overlay"></div>
+        
+        <div class="hero-content">
+            <h1>
+                <span class="white-text">Точний підбір автозапчастин</span>
+                <span class="red-text">Під ваше авто</span>
+            </h1>
+            
+            <div class="tagline">
+                <span>Швидка відповідь</span>
+                <div class="separator"></div>
+                <span>Точно</span>
+                <div class="separator"></div>
+                <span style="color: var(--white); font-weight: 700;">Надійно</span>
+            </div>
+            
+            <a href="#request-form" class="btn">Залишити заявку</a>
+        </div>
+
+        <!-- Scroll Indicator (Mouse & Arrows) -->
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <div class="arrows">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <!-- Feature 1 -->
+                <div class="feature-card">
+                    <div class="icon-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5v14"/><path d="M8 5v14"/><path d="M12 5v14"/><path d="M17 5v14"/><path d="M21 5v14"/></svg>
+                    </div>
+                    <h3>Підбір по VIN</h3>
+                    <p>Гарантуємо 100% сумісність запчастин з вашим автомобілем завдяки професійній перевірці за VIN-кодом.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card">
+                    <div class="icon-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    </div>
+                    <h3>Оригінал та Аналоги</h3>
+                    <p>Пропонуємо чесний вибір: сертифіковані оригінальні деталі від виробника або перевірені якісні аналоги.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card">
+                    <div class="icon-box">
+                        <!-- Changed to Lightning Bolt for Speed -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    </div>
+                    <h3>Швидка відповідь</h3>
+                    <p>Ми не змушуємо вас чекати. Обробляємо запити миттєво та надаємо повну інформацію у найкоротші терміни.</p>
+                </div>
+                
+                 <!-- Feature 4 -->
+                 <div class="feature-card">
+                    <div class="icon-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                    </div>
+                    <h3>Доставка по Україні</h3>
+                    <p>Швидка відправка замовлень "Новою Поштою" у будь-який куточок країни.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section class="location-section">
+        <div class="container">
+            <div class="location-container">
+                <div class="location-info">
+                    <h2>Точка видачі BROAUTO</h2>
+                    <div class="location-details">
+                        <div class="location-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <div>
+                                <strong>Адреса самовивозу:</strong>
+                                <p>м. Харків, вул. Клочківська, 58</p>
+                            </div>
+                        </div>
+                        <div class="location-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            <div>
+                                <strong>Графік роботи:</strong>
+                                <p>Пн-Пт: 09:00 – 18:00<br>Сб: 10:00 – 18:00<br>Нд: Вихідний</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="https://www.google.com/maps/place/%D0%90%D0%92%D0%A2%D0%9E%D0%9C%D0%90%D0%93%D0%90%D0%97%D0%98%D0%9D+%7C+BROAUTO/@50.0006246,36.2201709,18.8z/data=!4m14!1m7!3m6!1s0x4127a0e302652f9d:0x3233f920f98b514!2z0LLRg9C70LjRhtGPINCa0LvQvtGH0LrRltCy0YHRjNC60LAsIDU4LCDQpdCw0YDQutGW0LIsINCl0LDRgNC60ZbQstGB0YzQutCwINC-0LHQu9Cw0YHRgtGMLCA2MTAwMA!3b1!8m2!3d49.9998963!4d36.2235498!3m5!1s0x4127a12b0431b4d3:0x263500109daa8ecb!8m2!3d50.0004499!4d36.2213124!16s%2Fg%2F11yr_08dkm?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn btn-outline" style="border-color: #fff; color: #fff;">Прокласти маршрут</a>
+                </div>
+                
+                <!-- REAL MAP IFRAME BLOCK -->
+                <div class="map-frame-container">
+                    <iframe 
+                        src="https://maps.google.com/maps?q=50.0004499,36.2213124&hl=uk&z=18&output=embed" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form Section -->
+    <section id="request-form" class="request-section">
+        <div class="container">
+            <div class="form-wrapper">
+                <div class="form-header">
+                    <h2>Заявка на підбір</h2>
+                    <p>Заповніть форму і ми знайдемо те, що вам потрібно</p>
+                </div>
+
+                <form id="partsForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Ім'я</label>
+                            <input type="text" id="name" name="name" class="form-input" placeholder="Ваше ім'я" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Телефон</label>
+                            <input type="tel" id="phone" name="phone" class="form-input" placeholder="+38 (0XX) XXX-XX-XX" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="make" class="form-label">Марка авто</label>
+                            <input type="text" id="make" name="make" class="form-input" placeholder="Наприклад: Volkswagen" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="model" class="form-label">Модель</label>
+                            <input type="text" id="model" name="model" class="form-input" placeholder="Наприклад: Passat B8" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="year" class="form-label">Рік випуску</label>
+                            <input type="number" id="year" name="year" class="form-input" placeholder="2018" min="1900" max="2025" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="vin" class="form-label">VIN код</label>
+                            <input type="text" id="vin" name="vin" class="form-input" placeholder="17 символів">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="comment" class="form-label">Яка запчастина потрібна?</label>
+                        <textarea id="comment" name="comment" class="form-textarea" placeholder="Опишіть що потрібно наприклад: гальмівні колодки" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn submit-btn">Відправити запит</button>
+                    
+                    <div id="successMsg" class="success-message">
+                        Дякуємо! Ваша заявка прийнята. Ми зв'яжемось з вами у Telegram найближчим часом.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <!-- Image Logo Placeholder for Footer -->
+            <a href="#" class="logo-link" style="display: inline-block; margin-bottom: 15px;">
+                <!-- ЗАМІНІТЬ ЦЕ ПОСИЛАННЯ НА ВАШЕ ЛОГО -->
+                <img src="https://placehold.co/200x50/transparent/white?text=ВАШЕ+ЛОГО" alt="BROAUTO Logo" class="logo-img" style="margin: 0 auto;">
+            </a>
+            
+            <div class="footer-slogan">Швидко. Точно. <span>Надійно.</span></div>
+            
+            <p class="footer-note" style="margin-top: 20px;">&copy; 2025 BROAUTO. Всі права захищені.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Custom Cursor Logic ---
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-outline');
+            
+            // Check if user has a mouse (fine pointer)
+            if (window.matchMedia("(pointer: fine)").matches) {
+                
+                window.addEventListener('mousemove', function(e) {
+                    const posX = e.clientX;
+                    const posY = e.clientY;
+
+                    // Dot moves instantly
+                    cursorDot.style.left = `${posX}px`;
+                    cursorDot.style.top = `${posY}px`;
+                    
+                    // Outline moves with animation (smooth follow effect)
+                    cursorOutline.animate({
+                        left: `${posX}px`,
+                        top: `${posY}px`
+                    }, { duration: 500, fill: "forwards" });
+                });
+
+                // Add hover effect for interactive elements
+                const interactiveElements = document.querySelectorAll('a, button, input, textarea, .map-frame-container iframe');
+                
+                interactiveElements.forEach(el => {
+                    el.addEventListener('mouseenter', () => {
+                        document.body.classList.add('hover-active');
+                    });
+                    el.addEventListener('mouseleave', () => {
+                        document.body.classList.remove('hover-active');
+                    });
+                });
+            }
+
+            // --- Form Logic with Telegram Integration ---
+            const form = document.getElementById('partsForm');
+            const successMsg = document.getElementById('successMsg');
+            const submitBtn = document.querySelector('.submit-btn');
+
+            // --- ВАШІ ДАНІ ТЕЛЕГРАМ БОТА ---
+            const BOT_TOKEN = 'ВАШ_ТОКЕН'; // Замініть на токен від @BotFather
+            const CHAT_ID = 'ВАШ_CHAT_ID'; // Замініть на ваш ID чату
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // 1. Збираємо дані форми
+                const name = document.getElementById('name').value;
+                const phone = document.getElementById('phone').value;
+                const make = document.getElementById('make').value;
+                const model = document.getElementById('model').value;
+                const year = document.getElementById('year').value;
+                const vin = document.getElementById('vin').value;
+                const comment = document.getElementById('comment').value;
+
+                // 2. Формуємо повідомлення для Телеграм
+                const messageText = `
+<b>🔥 Нова заявка з сайту BROAUTO!</b>
+
+👤 <b>Ім'я:</b> ${name}
+📞 <b>Телефон:</b> ${phone}
+
+🚗 <b>Авто:</b> ${make} ${model} (${year})
+🔢 <b>VIN:</b> ${vin ? vin : 'Не вказано'}
+
+📝 <b>Запит:</b>
+${comment}
+                `;
+
+                // 3. Відправляємо в Телеграм
+                // Якщо токен не вказано (залишився 'ВАШ_ТОКЕН'), просто показуємо успіх (тестовий режим)
+                if (BOT_TOKEN === 'ВАШ_ТОКЕН') {
+                    console.log('Повідомлення (Тест):', messageText);
+                    showSuccess();
+                    return;
+                }
+
+                // Реальна відправка
+                const originalBtnText = submitBtn.textContent;
+                submitBtn.textContent = 'Відправка...';
+                submitBtn.disabled = true;
+
+                fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        chat_id: CHAT_ID,
+                        text: messageText,
+                        parse_mode: 'HTML'
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        showSuccess();
+                    } else {
+                        alert('Помилка відправки. Перевірте консоль.');
+                        console.error('Telegram Error:', data);
+                        resetButton();
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch Error:', error);
+                    alert('Сталася помилка зєднання.');
+                    resetButton();
+                });
+
+                function showSuccess() {
+                    submitBtn.style.display = 'none';
+                    successMsg.style.display = 'block';
+                    form.reset();
+                }
+
+                function resetButton() {
+                    submitBtn.textContent = originalBtnText;
+                    submitBtn.disabled = false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
