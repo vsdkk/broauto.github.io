@@ -2,7 +2,7 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BROAUTO — Точний підбір автозапчастин</title>
     <meta name="description" content="BROAUTO: Точний підбір автозапчастин під ваше авто. Швидко. Точно. Надійно.">
     
@@ -33,6 +33,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent; /* Remove highlight on mobile tap */
         }
 
         html {
@@ -67,49 +68,31 @@
         }
 
         /* --- Custom Cursor Styles --- */
-        .cursor-dot,
-        .cursor-outline {
+        .cursor-main {
             position: fixed;
             top: 0;
             left: 0;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
+            width: 24px;
+            height: 24px;
             z-index: 9999;
             pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.65376 2.22268C5.40562 1.9723 5 2.14779 5 2.4949V21.0772C5 21.6436 5.66986 21.9427 6.0954 21.5663L10.741 17.4582C10.922 17.2981 11.1565 17.2155 11.3976 17.2268L17.787 17.5259C18.3512 17.5523 18.6631 16.9034 18.2976 16.4633L5.65376 2.22268Z' fill='black' stroke='white' stroke-width='1'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            filter: drop-shadow(0 0 6px var(--primary));
+            transition: transform 0.1s;
             display: none;
         }
-        
+
         @media (pointer: fine) {
-            .cursor-dot, .cursor-outline {
+            .cursor-main {
                 display: block;
             }
         }
 
-        .cursor-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--primary);
-            box-shadow: 0 0 10px var(--primary);
-        }
-
-        .cursor-outline {
-            width: 40px;
-            height: 40px;
-            border: 1px solid rgba(100, 100, 100, 0.3);
-            transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
-        }
-
-        body.hover-active .cursor-outline {
-            width: 60px;
-            height: 60px;
-            background-color: rgba(211, 47, 47, 0.05);
-            border-color: var(--primary);
-        }
-        
-        body.hover-active .cursor-dot {
-            width: 12px;
-            height: 12px;
-            background-color: var(--primary-glow);
+        body.hover-active .cursor-main {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 10px var(--primary-glow));
         }
 
         /* --- Components --- */
@@ -254,7 +237,7 @@
         }
 
         .hero h1 {
-            font-size: clamp(3rem, 7vw, 6rem);
+            font-size: clamp(2.5rem, 6vw, 6rem); /* Optimized minimum size */
             font-weight: 900;
             line-height: 1.1;
             margin-bottom: 30px;
@@ -302,7 +285,7 @@
 
         /* --- Features Section --- */
         .features {
-            padding: 100px 0;
+            padding: 80px 0;
             background-color: var(--light-gray);
             position: relative;
             z-index: 2;
@@ -310,7 +293,7 @@
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Better fit for mobile */
             gap: 30px;
         }
 
@@ -385,21 +368,39 @@
             box-shadow: var(--shadow);
         }
 
-        /* --- ОНОВЛЕНИЙ СТИЛЬ: ПРОЗОРИЙ ЧОРНИЙ ФОН + ФОТО МАГАЗИНУ (shop.jpg) --- */
         .location-info {
             padding: 60px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            
-            /* Комбінуємо затемнення (чорна прозорість) та фото */
-            background-image: 
-                linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7)), 
-                url('shop.jpg'); /* <-- ТУТ САЙТ ШУКАЄ ФОТО МАГАЗИНУ */
-                
-            background-size: cover;
-            background-position: center;
-            background-color: #1a1a1a; 
+            position: relative;
+            overflow: hidden;
+            background-color: #1a1a1a;
+        }
+
+        .loc-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        .loc-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6));
+            z-index: 1;
+        }
+
+        .loc-content {
+            position: relative;
+            z-index: 2;
         }
         
         .location-info h2 {
@@ -452,7 +453,7 @@
 
         /* --- Form Section --- */
         .request-section {
-            padding: 120px 0;
+            padding: 100px 0;
             background-color: var(--white);
             position: relative;
         }
@@ -577,19 +578,31 @@
             margin-top: 15px;
         }
 
-        /* --- Responsive --- */
+        /* --- Responsive & Mobile Optimization --- */
+        @media (max-width: 991px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            .location-container {
+                grid-template-columns: 1fr; /* Stack location info on top of map */
+            }
+            .map-frame-container {
+                min-height: 350px;
+            }
+        }
+
         @media (max-width: 768px) {
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2.2rem; /* Adjusted for mobile */
             }
             
             .logo-img {
-                height: 50px; 
+                height: 45px; /* Smaller logo for mobile header */
             }
             
             .form-row {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 15px;
             }
 
             .form-wrapper {
@@ -597,15 +610,11 @@
             }
             
             .features {
-                padding: 60px 0;
-            }
-            
-            .location-container {
-                grid-template-columns: 1fr;
+                padding: 50px 0;
             }
             
             .location-info {
-                padding: 40px 25px;
+                padding: 40px 20px;
             }
             
             .request-section {
@@ -623,6 +632,27 @@
             
             .tagline .separator {
                 display: none;
+            }
+            
+            .form-input, .form-textarea {
+                font-size: 16px; /* Prevents iOS zoom on focus */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .btn {
+                width: 100%;
+                padding: 16px;
+                font-size: 1rem;
+            }
+            .hero-content {
+                padding: 0 15px;
+            }
+            .container {
+                padding: 0 15px;
+            }
+            .location-info h2, .form-header h2 {
+                font-size: 1.8rem;
             }
         }
 
@@ -705,8 +735,7 @@
 <body>
     
     <!-- Custom Cursor -->
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
+    <div class="cursor-main"></div>
 
     <!-- Header -->
     <header>
@@ -718,7 +747,7 @@
         </div>
     </header>
 
-    <!-- Hero Section (Тут використовується video.mp4 для фону) -->
+    <!-- Hero Section -->
     <section class="hero">
         <video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1542282088-fe8426682b8f?q=80&w=1887&auto=format&fit=crop">
             <!-- ДЛЯ ГОЛОВНОГО ВІДЕО ФАЙЛ МАЄ НАЗИВАТИСЯ video.mp4 -->
@@ -777,7 +806,7 @@
                     <div class="icon-box">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                     </div>
-                    <h3>Швидка відповідь</h3>
+                    <h3>Швидко</h3>
                     <p>Ми не змушуємо вас чекати. Обробляємо запити миттєво та надаємо повну інформацію у найкоротші терміни.</p>
                 </div>
                 <div class="feature-card">
@@ -796,27 +825,36 @@
         <div class="container">
             <div class="location-container">
                 <div class="location-info">
-                    <h2>Точка видачі BROAUTO</h2>
-                    <div class="location-details">
-                        <div class="location-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                            <div>
-                                <strong>Адреса самовивозу:</strong>
-                                <p>м. Харків, вул. Клочківська, 58</p>
+                    <!-- ТУТ ДОДАНО ВІДЕО НА ФОН ТОЧКИ ВИДАЧІ -->
+                    <!-- Назвіть ваше відео shop.mp4 і покладіть поруч із файлом сайту -->
+                    <video class="loc-video" autoplay muted loop playsinline>
+                        <source src="shop.mp4" type="video/mp4">
+                    </video>
+                    <div class="loc-overlay"></div>
+                    
+                    <div class="loc-content">
+                        <h2>Точка видачі BROAUTO</h2>
+                        <div class="location-details">
+                            <div class="location-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                <div>
+                                    <strong>Адреса самовивозу:</strong>
+                                    <p>м. Харків, вул. Клочківська, 58</p>
+                                </div>
+                            </div>
+                            <div class="location-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                <div>
+                                    <strong>Графік роботи:</strong>
+                                    <p>Пн-Пт: 09:00 – 18:00<br>Сб: 10:00 – 18:00<br>Нд: Вихідний</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="location-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                            <div>
-                                <strong>Графік роботи:</strong>
-                                <p>Пн-Пт: 09:00 – 18:00<br>Сб: 10:00 – 18:00<br>Нд: Вихідний</p>
-                            </div>
-                        </div>
+                        <a href="https://www.google.com/maps/place/%D0%90%D0%92%D0%A2%D0%9E%D0%9C%D0%90%D0%93%D0%90%D0%97%D0%98%D0%9D+%7C+BROAUTO/@50.0006246,36.2187375,17z/data=!3m1!4b1!4m6!3m5!1s0x4127a12b0431b4d3:0x263500109daa8ecb!8m2!3d50.0004499!4d36.2213124!16s%2Fg%2F11yr_08dkm?authuser=3&entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn btn-outline" style="border-color: #fff; color: #fff;">Прокласти маршрут</a>
                     </div>
-                    <a href="https://www.google.com/maps/place/%D0%90%D0%92%D0%A2%D0%9E%D0%9C%D0%90%D0%93%D0%90%D0%97%D0%98%D0%9D+%7C+BROAUTO/@50.0006246,36.2201709,18.8z/data=!4m14!1m7!3m6!1s0x4127a0e302652f9d:0x3233f920f98b514!2z0LLRg9C70LjRhtGPINCa0LvQvtGH0LrRltCy0YHRjNC60LAsIDU4LCDQpdCw0YDQutGW0LIsINCl0LDRgNC60ZbQstGB0YzQutCwINC-0LHQu9Cw0YHRgtGMLCA2MTAwMA!3b1!8m2!3d49.9998963!4d36.2235498!3m5!1s0x4127a12b0431b4d3:0x263500109daa8ecb!8m2!3d50.0004499!4d36.2213124!16s%2Fg%2F11yr_08dkm?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn btn-outline" style="border-color: #fff; color: #fff;">Прокласти маршрут</a>
                 </div>
                 <div class="map-frame-container">
-                    <iframe src="https://maps.google.com/maps?q=50.0004499,36.2213124&hl=uk&z=18&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe src="https://maps.google.com/maps?q=50.0004499,36.2213124&hl=uk&z=17&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>
@@ -890,21 +928,24 @@
     <!-- Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Cursor Logic
-            const cursorDot = document.querySelector('.cursor-dot');
-            const cursorOutline = document.querySelector('.cursor-outline');
+            // New Custom Cursor Logic
+            const cursorMain = document.querySelector('.cursor-main');
+            
             if (window.matchMedia("(pointer: fine)").matches) {
                 window.addEventListener('mousemove', function(e) {
-                    const posX = e.clientX;
-                    const posY = e.clientY;
-                    cursorDot.style.left = `${posX}px`;
-                    cursorDot.style.top = `${posY}px`;
-                    cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
+                    cursorMain.style.left = e.clientX + 'px';
+                    cursorMain.style.top = e.clientY + 'px';
                 });
+
                 const interactiveElements = document.querySelectorAll('a, button, input, textarea, .map-frame-container iframe');
+                
                 interactiveElements.forEach(el => {
-                    el.addEventListener('mouseenter', () => { document.body.classList.add('hover-active'); });
-                    el.addEventListener('mouseleave', () => { document.body.classList.remove('hover-active'); });
+                    el.addEventListener('mouseenter', () => {
+                        document.body.classList.add('hover-active');
+                    });
+                    el.addEventListener('mouseleave', () => {
+                        document.body.classList.remove('hover-active');
+                    });
                 });
             }
 
