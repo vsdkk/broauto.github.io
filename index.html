@@ -45,7 +45,7 @@
             color: var(--text-dark);
             line-height: 1.6;
             overflow-x: hidden;
-            /* Hide default cursor only on devices with fine pointer (mouse) */
+            cursor: default;
         }
         
         @media (pointer: fine) {
@@ -76,7 +76,7 @@
             border-radius: 50%;
             z-index: 9999;
             pointer-events: none;
-            display: none; /* Hidden by default */
+            display: none;
         }
         
         @media (pointer: fine) {
@@ -99,7 +99,6 @@
             transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
         }
 
-        /* Hover States for Cursor */
         body.hover-active .cursor-outline {
             width: 60px;
             height: 60px;
@@ -123,7 +122,7 @@
             font-weight: 700;
             border-radius: 50px;
             border: none;
-            cursor: pointer; /* Fallback */
+            cursor: pointer;
             transition: var(--transition);
             text-align: center;
             box-shadow: 0 10px 30px rgba(211, 47, 47, 0.3);
@@ -168,17 +167,15 @@
             left: 0;
             width: 100%;
             padding: 20px 0;
-            z-index: 100; /* Increased z-index to stay on top */
+            z-index: 100;
         }
         
-        /* Fixed Header Container for Logo Alignment */
         header .container {
             display: flex;
             align-items: center;
-            justify-content: flex-start; /* ПОВЕРНУТО ВЛІВО (Left aligned) */
+            justify-content: flex-start;
         }
 
-        /* CSS for Image Logo */
         .logo-link {
             display: inline-block;
             line-height: 0;
@@ -186,7 +183,7 @@
 
         .logo-img {
             display: block;
-            height: 80px; /* ЗБІЛЬШЕНО: Розмір логотипу в шапці */
+            height: 80px;
             width: auto;
             max-width: 100%; 
             object-fit: contain;
@@ -204,11 +201,9 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
-            /* Added padding top to push visual center down slightly, preventing overlap */
-            padding-top: 80px; 
+            padding-top: 80px;
         }
 
-        /* Video Styles */
         .hero-video {
             position: absolute;
             top: 0;
@@ -390,12 +385,22 @@
             box-shadow: var(--shadow);
         }
 
+        /* --- ОНОВЛЕНИЙ СТИЛЬ: ПРОЗОРИЙ ЧОРНИЙ ФОН + ФОТО --- */
         .location-info {
             padding: 60px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+            
+            /* Тут ми накладаємо напівпрозорий чорний колір (0.7) поверх картинки */
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('shop.jpg'); /* <-- ТУТ САЙТ ШУКАЄ ФОТО МАГАЗИНУ */
+                
+            background-size: cover;
+            background-position: center;
+            /* Колір, якщо картинки немає */
+            background-color: #1a1a1a; 
         }
         
         .location-info h2 {
@@ -579,9 +584,8 @@
                 font-size: 2.5rem;
             }
             
-            /* Make logo smaller on mobile to prevent overlap */
             .logo-img {
-                height: 50px; /* Збільшено з 40px до 50px для мобільних */
+                height: 50px; 
             }
             
             .form-row {
@@ -623,25 +627,18 @@
             }
         }
 
-        /* --- New Animations --- */
-        /* Pulsing Button Effect */
+        /* --- Animations --- */
         @keyframes pulse-red {
-            0% {
-                box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 20px rgba(211, 47, 47, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(211, 47, 47, 0);
-            }
+            0% { box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(211, 47, 47, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(211, 47, 47, 0); }
         }
 
         .hero .btn {
             animation: pulse-red 2s infinite;
         }
 
-        /* --- Scroll Mouse Indicator --- */
+        /* --- Scroll Indicator --- */
         .scroll-indicator {
             position: absolute;
             bottom: 30px;
@@ -691,13 +688,8 @@
             animation: scroll-arrow 1.5s infinite;
         }
 
-        .arrows span:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        
-        .arrows span:nth-child(3) {
-            animation-delay: 0.4s;
-        }
+        .arrows span:nth-child(2) { animation-delay: 0.2s; }
+        .arrows span:nth-child(3) { animation-delay: 0.4s; }
 
         @keyframes scroll-wheel {
             0% { top: 8px; opacity: 1; }
@@ -713,28 +705,24 @@
 </head>
 <body>
     
-    <!-- Custom Cursor Elements -->
+    <!-- Custom Cursor -->
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
     <!-- Header -->
     <header>
         <div class="container">
-            <!-- Image Logo Placeholder -->
             <a href="#" class="logo-link">
-                <!-- ТУТ САЙТ ШУКАЄ ФАЙЛ logobro.png -->
-                <img src="logobro.png" onerror="this.src='https://placehold.co/200x50/transparent/white?text=LOGO+HERE'; this.style.opacity='0.5'" alt="BROAUTO Logo" class="logo-img">
+                <!-- Логотип (шукає logobro.png) -->
+                <img src="logobro.png" onerror="this.src='https://placehold.co/200x50/transparent/white?text=LOGO'; this.style.opacity='0.5'" alt="BROAUTO Logo" class="logo-img">
             </a>
         </div>
     </header>
 
-    <!-- Hero Section (Video Background) -->
+    <!-- Hero Section -->
     <section class="hero">
-        <!-- Video Background Element -->
         <video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1542282088-fe8426682b8f?q=80&w=1887&auto=format&fit=crop">
-            <!-- Це посилання на стокове відео. Ви можете замінити його на своє (наприклад, з блимаючими фарами) -->
             <source src="https://videos.pexels.com/video-files/3045163/3045163-hd_1920_1080_30fps.mp4" type="video/mp4">
-            Ваш браузер не підтримує відео.
         </video>
         
         <div class="grid-overlay"></div>
@@ -746,7 +734,7 @@
             </h1>
             
             <div class="tagline">
-                <span>Швидка відповідь</span>
+                <span>Швидко</span>
                 <div class="separator"></div>
                 <span>Точно</span>
                 <div class="separator"></div>
@@ -756,24 +744,20 @@
             <a href="#request-form" class="btn">Залишити заявку</a>
         </div>
 
-        <!-- Scroll Indicator (Mouse & Arrows) -->
         <div class="scroll-indicator">
             <div class="mouse">
                 <div class="wheel"></div>
             </div>
             <div class="arrows">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
+    <!-- Features -->
     <section class="features">
         <div class="container">
             <div class="features-grid">
-                <!-- Feature 1 -->
                 <div class="feature-card">
                     <div class="icon-box">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5v14"/><path d="M8 5v14"/><path d="M12 5v14"/><path d="M17 5v14"/><path d="M21 5v14"/></svg>
@@ -781,28 +765,21 @@
                     <h3>Підбір по VIN</h3>
                     <p>Гарантуємо 100% сумісність запчастин з вашим автомобілем завдяки професійній перевірці за VIN-кодом.</p>
                 </div>
-
-                <!-- Feature 2 -->
                 <div class="feature-card">
                     <div class="icon-box">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
                     </div>
                     <h3>Оригінал та Аналоги</h3>
                     <p>Пропонуємо чесний вибір: сертифіковані оригінальні деталі від виробника або перевірені якісні аналоги.</p>
                 </div>
-
-                <!-- Feature 3 -->
                 <div class="feature-card">
                     <div class="icon-box">
-                        <!-- Changed to Lightning Bolt for Speed -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                     </div>
                     <h3>Швидка відповідь</h3>
                     <p>Ми не змушуємо вас чекати. Обробляємо запити миттєво та надаємо повну інформацію у найкоротші терміни.</p>
                 </div>
-                
-                 <!-- Feature 4 -->
-                 <div class="feature-card">
+                <div class="feature-card">
                     <div class="icon-box">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
                     </div>
@@ -813,7 +790,7 @@
         </div>
     </section>
 
-    <!-- Location Section -->
+    <!-- Location -->
     <section class="location-section">
         <div class="container">
             <div class="location-container">
@@ -837,21 +814,14 @@
                     </div>
                     <a href="https://www.google.com/maps/place/%D0%90%D0%92%D0%A2%D0%9E%D0%9C%D0%90%D0%93%D0%90%D0%97%D0%98%D0%9D+%7C+BROAUTO/@50.0006246,36.2201709,18.8z/data=!4m14!1m7!3m6!1s0x4127a0e302652f9d:0x3233f920f98b514!2z0LLRg9C70LjRhtGPINCa0LvQvtGH0LrRltCy0YHRjNC60LAsIDU4LCDQpdCw0YDQutGW0LIsINCl0LDRgNC60ZbQstGB0YzQutCwINC-0LHQu9Cw0YHRgtGMLCA2MTAwMA!3b1!8m2!3d49.9998963!4d36.2235498!3m5!1s0x4127a12b0431b4d3:0x263500109daa8ecb!8m2!3d50.0004499!4d36.2213124!16s%2Fg%2F11yr_08dkm?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn btn-outline" style="border-color: #fff; color: #fff;">Прокласти маршрут</a>
                 </div>
-                
-                <!-- REAL MAP IFRAME BLOCK -->
                 <div class="map-frame-container">
-                    <iframe 
-                        src="https://maps.google.com/maps?q=50.0004499,36.2213124&hl=uk&z=18&output=embed" 
-                        allowfullscreen="" 
-                        loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
+                    <iframe src="https://maps.google.com/maps?q=50.0004499,36.2213124&hl=uk&z=18&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Form Section -->
+    <!-- Form -->
     <section id="request-form" class="request-section">
         <div class="container">
             <div class="form-wrapper">
@@ -859,7 +829,6 @@
                     <h2>Заявка на підбір</h2>
                     <p>Заповніть форму і ми знайдемо те, що вам потрібно</p>
                 </div>
-
                 <form id="partsForm">
                     <div class="form-row">
                         <div class="form-group">
@@ -871,7 +840,6 @@
                             <input type="tel" id="phone" name="phone" class="form-input" placeholder="+38 (0XX) XXX-XX-XX" required>
                         </div>
                     </div>
-
                     <div class="form-row">
                         <div class="form-group">
                             <label for="make" class="form-label">Марка авто</label>
@@ -882,7 +850,6 @@
                             <input type="text" id="model" name="model" class="form-input" placeholder="Наприклад: Passat B8" required>
                         </div>
                     </div>
-
                     <div class="form-row">
                         <div class="form-group">
                             <label for="year" class="form-label">Рік випуску</label>
@@ -893,17 +860,16 @@
                             <input type="text" id="vin" name="vin" class="form-input" placeholder="17 символів">
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <label for="photo" class="form-label">Фото запчастини (необов'язково)</label>
+                        <input type="file" id="photo" name="photo" accept="image/*" class="form-input" style="padding-top: 13px;">
+                    </div>
                     <div class="form-group">
                         <label for="comment" class="form-label">Яка запчастина потрібна?</label>
                         <textarea id="comment" name="comment" class="form-textarea" placeholder="Опишіть що потрібно наприклад: гальмівні колодки" required></textarea>
                     </div>
-
                     <button type="submit" class="btn submit-btn">Відправити запит</button>
-                    
-                    <div id="successMsg" class="success-message">
-                        Дякуємо! Ваша заявка прийнята. Ми зв'яжемось з вами у Telegram найближчим часом.
-                    </div>
+                    <div id="successMsg" class="success-message">Дякуємо! Ваша заявка прийнята. Ми зв'яжемось з вами у Telegram найближчим часом.</div>
                 </form>
             </div>
         </div>
@@ -912,70 +878,46 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <!-- Image Logo Placeholder for Footer -->
             <a href="#" class="logo-link" style="display: inline-block; margin-bottom: 15px;">
-                <!-- ТУТ ТАКОЖ ШУКАЄ logobro.png -->
-                <img src="logobro.png" onerror="this.src='https://placehold.co/200x50/transparent/white?text=LOGO+HERE'; this.style.opacity='0.5'" alt="BROAUTO Logo" class="logo-img" style="margin: 0 auto; height: 90px;">
+                <img src="logobro.png" onerror="this.src='https://placehold.co/200x50/transparent/white?text=LOGO'; this.style.opacity='0.5'" alt="BROAUTO Logo" class="logo-img" style="margin: 0 auto; height: 90px;">
             </a>
-            
             <div class="footer-slogan">Швидко. Точно. <span>Надійно.</span></div>
-            
             <p class="footer-note" style="margin-top: 20px;">&copy; 2025 BROAUTO. Всі права захищені.</p>
         </div>
     </footer>
 
-    <!-- JavaScript -->
+    <!-- Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            
-            // --- Custom Cursor Logic ---
+            // Cursor Logic
             const cursorDot = document.querySelector('.cursor-dot');
             const cursorOutline = document.querySelector('.cursor-outline');
-            
-            // Check if user has a mouse (fine pointer)
             if (window.matchMedia("(pointer: fine)").matches) {
-                
                 window.addEventListener('mousemove', function(e) {
                     const posX = e.clientX;
                     const posY = e.clientY;
-
-                    // Dot moves instantly
                     cursorDot.style.left = `${posX}px`;
                     cursorDot.style.top = `${posY}px`;
-                    
-                    // Outline moves with animation (smooth follow effect)
-                    cursorOutline.animate({
-                        left: `${posX}px`,
-                        top: `${posY}px`
-                    }, { duration: 500, fill: "forwards" });
+                    cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
                 });
-
-                // Add hover effect for interactive elements
                 const interactiveElements = document.querySelectorAll('a, button, input, textarea, .map-frame-container iframe');
-                
                 interactiveElements.forEach(el => {
-                    el.addEventListener('mouseenter', () => {
-                        document.body.classList.add('hover-active');
-                    });
-                    el.addEventListener('mouseleave', () => {
-                        document.body.classList.remove('hover-active');
-                    });
+                    el.addEventListener('mouseenter', () => { document.body.classList.add('hover-active'); });
+                    el.addEventListener('mouseleave', () => { document.body.classList.remove('hover-active'); });
                 });
             }
 
-            // --- Form Logic with Telegram Integration ---
+            // Telegram Form Logic
             const form = document.getElementById('partsForm');
             const successMsg = document.getElementById('successMsg');
             const submitBtn = document.querySelector('.submit-btn');
-
-            // --- ВАШІ ДАНІ ТЕЛЕГРАМ БОТА ---
+            
+            // Credentials
             const BOT_TOKEN = '8307031864:AAGhT5kGgtk_dGpcpnaxlWxFP-3teTtmoMA';
             const CHAT_ID = '7804570131';
 
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
-
-                // 1. Збираємо дані форми
                 const name = document.getElementById('name').value;
                 const phone = document.getElementById('phone').value;
                 const make = document.getElementById('make').value;
@@ -983,8 +925,9 @@
                 const year = document.getElementById('year').value;
                 const vin = document.getElementById('vin').value;
                 const comment = document.getElementById('comment').value;
+                const photoInput = document.getElementById('photo');
+                const file = photoInput && photoInput.files ? photoInput.files[0] : null;
 
-                // 2. Формуємо повідомлення для Телеграм
                 const messageText = `
 <b>🔥 Нова заявка з сайту BROAUTO!</b>
 
@@ -998,56 +941,35 @@
 ${comment}
                 `;
 
-                // 3. Відправляємо в Телеграм
-                // Якщо токен не вказано (залишився 'ВАШ_ТОКЕН'), просто показуємо успіх (тестовий режим)
-                if (BOT_TOKEN === 'ВАШ_ТОКЕН') {
-                    console.log('Повідомлення (Тест):', messageText);
-                    showSuccess();
-                    return;
-                }
-
-                // Реальна відправка
                 const originalBtnText = submitBtn.textContent;
                 submitBtn.textContent = 'Відправка...';
                 submitBtn.disabled = true;
 
-                fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        chat_id: CHAT_ID,
-                        text: messageText,
-                        parse_mode: 'HTML'
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.ok) {
-                        showSuccess();
-                    } else {
-                        alert('Помилка відправки. Перевірте консоль.');
-                        console.error('Telegram Error:', data);
-                        resetButton();
-                    }
-                })
-                .catch(error => {
-                    console.error('Fetch Error:', error);
-                    alert('Сталася помилка зєднання.');
-                    resetButton();
-                });
-
-                function showSuccess() {
-                    submitBtn.style.display = 'none';
-                    successMsg.style.display = 'block';
-                    form.reset();
+                if (file) {
+                    const formData = new FormData();
+                    formData.append('chat_id', CHAT_ID);
+                    formData.append('caption', messageText);
+                    formData.append('photo', file);
+                    formData.append('parse_mode', 'HTML');
+                    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, { method: 'POST', body: formData })
+                        .then(handleResponse).catch(handleError);
+                } else {
+                    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ chat_id: CHAT_ID, text: messageText, parse_mode: 'HTML' })
+                    }).then(handleResponse).catch(handleError);
                 }
 
-                function resetButton() {
-                    submitBtn.textContent = originalBtnText;
-                    submitBtn.disabled = false;
+                function handleResponse(response) {
+                    return response.json().then(data => {
+                        if (data.ok) { showSuccess(); } 
+                        else { alert('Помилка. Перевірте консоль.'); console.error(data); resetButton(); }
+                    });
                 }
+                function handleError(error) { console.error(error); alert('Помилка зєднання.'); resetButton(); }
+                function showSuccess() { submitBtn.style.display = 'none'; successMsg.style.display = 'block'; form.reset(); }
+                function resetButton() { submitBtn.textContent = originalBtnText; submitBtn.disabled = false; }
             });
         });
     </script>
