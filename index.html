@@ -423,7 +423,8 @@
             background-color: #1a1a1a;
             /* Фон магазину в стилях (як fallback) */
             background-image: 
-                linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
+                linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7)), 
+                url('shop.jpg');
             background-size: cover;
             background-position: center;
         }
@@ -619,10 +620,6 @@
             margin-bottom: 10px;
         }
         
-        .footer-slogan span {
-            color: var(--primary);
-        }
-
         .footer-note {
             font-size: 0.9rem;
             color: #666;
@@ -895,33 +892,24 @@
         <div class="container">
             <div class="location-container">
                 <div class="location-info">
-                    <!-- ТУТ ДОДАНО ВІДЕО НА ФОН ТОЧКИ ВИДАЧІ -->
-                    <!-- Назвіть ваше відео shop.mp4 і покладіть поруч із файлом сайту -->
-                    <video class="loc-video" autoplay muted loop playsinline>
-                        <source src="shop.mp4" type="video/mp4">
-                    </video>
-                    <div class="loc-overlay"></div>
-                    
-                    <div class="loc-content">
-                        <h2 data-i18n="locTitle">Точка видачі BROAUTO</h2>
-                        <div class="location-details">
-                            <div class="location-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                                <div>
-                                    <strong data-i18n="locAddrTitle">Адреса самовивозу:</strong>
-                                    <p data-i18n="locAddr">м. Харків, вул. Клочківська, 58</p>
-                                </div>
-                            </div>
-                            <div class="location-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                <div>
-                                    <strong data-i18n="locScheduleTitle">Графік роботи:</strong>
-                                    <p data-i18n="locSchedule">Пн-Пт: 09:00 – 18:00<br>Сб: 10:00 – 18:00<br>Нд: Вихідний</p>
-                                </div>
+                    <h2 data-i18n="locTitle">Точка видачі BROAUTO</h2>
+                    <div class="location-details">
+                        <div class="location-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <div>
+                                <strong data-i18n="locAddrTitle">Адреса самовивозу:</strong>
+                                <p data-i18n="locAddr">м. Харків, вул. Клочківська, 58</p>
                             </div>
                         </div>
-                        <a href="https://www.google.com/maps/place/%D0%90%D0%92%D0%A2%D0%9E%D0%9C%D0%90%D0%93%D0%90%D0%97%D0%98%D0%9D+%7C+BROAUTO/@50.0006246,36.2187375,17z/data=!3m1!4b1!4m6!3m5!1s0x4127a12b0431b4d3:0x263500109daa8ecb!8m2!3d50.0004499!4d36.2213124!16s%2Fg%2F11yr_08dkm?authuser=3&entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn btn-outline" style="border-color: #fff; color: #fff;" data-i18n="locBtn">Прокласти маршрут</a>
+                        <div class="location-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            <div>
+                                <strong data-i18n="locScheduleTitle">Графік роботи:</strong>
+                                <p data-i18n="locSchedule">Пн-Пт: 09:00 – 18:00<br>Сб: 10:00 – 18:00<br>Нд: Вихідний</p>
+                            </div>
+                        </div>
                     </div>
+                    <a href="https://www.google.com/maps/place/%D0%90%D0%92%D0%A2%D0%9E%D0%9C%D0%90%D0%93%D0%90%D0%97%D0%98%D0%9D+%7C+BROAUTO/@50.0006246,36.2187375,17z/data=!3m1!4b1!4m6!3m5!1s0x4127a12b0431b4d3:0x263500109daa8ecb!8m2!3d50.0004499!4d36.2213124!16s%2Fg%2F11yr_08dkm?authuser=3&entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn btn-outline" style="border-color: #fff; color: #fff;" data-i18n="locBtn">Прокласти маршрут</a>
                 </div>
                 <div class="map-frame-container">
                     <iframe src="https://maps.google.com/maps?q=50.0004499,36.2213124&hl=uk&z=17&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -1068,7 +1056,7 @@
             
             // Credentials
             const BOT_TOKEN = '8307031864:AAGhT5kGgtk_dGpcpnaxlWxFP-3teTtmoMA';
-            const CHAT_ID = '7804570131';
+            const CHAT_ID = '593922330';
 
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
