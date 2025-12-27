@@ -385,21 +385,20 @@
             box-shadow: var(--shadow);
         }
 
-        /* --- ОНОВЛЕНИЙ СТИЛЬ: ПРОЗОРИЙ ЧОРНИЙ ФОН + ФОТО --- */
+        /* --- ОНОВЛЕНИЙ СТИЛЬ: ПРОЗОРИЙ ЧОРНИЙ ФОН + ФОТО МАГАЗИНУ (shop.jpg) --- */
         .location-info {
             padding: 60px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             
-            /* Тут ми накладаємо напівпрозорий чорний колір (0.7) поверх картинки */
+            /* Комбінуємо затемнення (чорна прозорість) та фото */
             background-image: 
-                linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7)), 
                 url('shop.jpg'); /* <-- ТУТ САЙТ ШУКАЄ ФОТО МАГАЗИНУ */
                 
             background-size: cover;
             background-position: center;
-            /* Колір, якщо картинки немає */
             background-color: #1a1a1a; 
         }
         
@@ -719,10 +718,12 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero Section (Тут використовується video.mp4 для фону) -->
     <section class="hero">
         <video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1542282088-fe8426682b8f?q=80&w=1887&auto=format&fit=crop">
-            <source src="https://videos.pexels.com/video-files/3045163/3045163-hd_1920_1080_30fps.mp4" type="video/mp4">
+            <!-- ДЛЯ ГОЛОВНОГО ВІДЕО ФАЙЛ МАЄ НАЗИВАТИСЯ video.mp4 -->
+            <source src="video.mp4" type="video/mp4">
+            Ваш браузер не підтримує відео.
         </video>
         
         <div class="grid-overlay"></div>
