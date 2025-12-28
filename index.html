@@ -69,6 +69,26 @@
             z-index: 2;
         }
 
+        /* --- Scroll Reveal Animations --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Затримка для карток, щоб вони з'являлися по черзі (ефект драбинки) */
+        .features-grid .feature-card:nth-child(1) { transition-delay: 0s; }
+        .features-grid .feature-card:nth-child(2) { transition-delay: 0.1s; }
+        .features-grid .feature-card:nth-child(3) { transition-delay: 0.2s; }
+        .features-grid .feature-card:nth-child(4) { transition-delay: 0.3s; }
+
+
         /* --- Custom Cursor Styles --- */
         .cursor-main {
             position: fixed;
@@ -169,7 +189,7 @@
         .logo-img {
             display: block;
             height: 80px;
-            width: auto;
+            width: auto; /* Allow auto width to maintain aspect ratio */
             max-width: 100%; 
             object-fit: contain;
             transition: height 0.3s ease;
@@ -801,8 +821,8 @@
     <header>
         <div class="container">
             <a href="#" class="logo-link">
-                <!-- Логотип (шукає logobro.png) -->
-                <img src="logobro.png" onerror="this.src='https://placehold.co/200x50/transparent/white?text=LOGO'; this.style.opacity='0.5'" alt="BROAUTO Logo" class="logo-img">
+                <!-- LOGO OPTIMIZATION: Added explicit width/height for CLS prevention -->
+                <img src="logobro.png" onerror="this.src='https://placehold.co/200x50/transparent/white?text=LOGO'; this.style.opacity='0.5'" alt="BROAUTO Logo" class="logo-img" width="200" height="80">
             </a>
             
             <!-- Language Switcher -->
@@ -855,28 +875,32 @@
     <section class="features">
         <div class="container">
             <div class="features-grid">
-                <div class="feature-card">
+                <!-- Added "reveal" class for animation -->
+                <div class="feature-card reveal">
                     <div class="icon-box">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5v14"/><path d="M8 5v14"/><path d="M12 5v14"/><path d="M17 5v14"/><path d="M21 5v14"/></svg>
                     </div>
                     <h3 data-i18n="feat1Title">Підбір по VIN</h3>
                     <p data-i18n="feat1Desc">Гарантуємо 100% сумісність запчастин з вашим автомобілем завдяки професійній перевірці за VIN-кодом.</p>
                 </div>
-                <div class="feature-card">
+                <!-- Added "reveal" class -->
+                <div class="feature-card reveal">
                     <div class="icon-box">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
                     </div>
                     <h3 data-i18n="feat2Title">Оригінал та Аналоги</h3>
                     <p data-i18n="feat2Desc">Пропонуємо чесний вибір: сертифіковані оригінальні деталі від виробника або перевірені якісні аналоги.</p>
                 </div>
-                <div class="feature-card">
+                <!-- Added "reveal" class -->
+                <div class="feature-card reveal">
                     <div class="icon-box">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                     </div>
                     <h3 data-i18n="feat3Title">Швидка відповідь</h3>
                     <p data-i18n="feat3Desc">Ми не змушуємо вас чекати. Обробляємо запити миттєво та надаємо повну інформацію у найкоротші терміни.</p>
                 </div>
-                <div class="feature-card">
+                <!-- Added "reveal" class -->
+                <div class="feature-card reveal">
                     <div class="icon-box">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
                     </div>
@@ -890,7 +914,8 @@
     <!-- Location -->
     <section class="location-section">
         <div class="container">
-            <div class="location-container">
+            <!-- Added "reveal" class for animation -->
+            <div class="location-container reveal">
                 <div class="location-info">
                     <h2 data-i18n="locTitle">Точка видачі BROAUTO</h2>
                     <div class="location-details">
@@ -912,6 +937,7 @@
                     <a href="https://www.google.com/maps/place/%D0%90%D0%92%D0%A2%D0%9E%D0%9C%D0%90%D0%93%D0%90%D0%97%D0%98%D0%9D+%7C+BROAUTO/@50.0006246,36.2187375,17z/data=!3m1!4b1!4m6!3m5!1s0x4127a12b0431b4d3:0x263500109daa8ecb!8m2!3d50.0004499!4d36.2213124!16s%2Fg%2F11yr_08dkm?authuser=3&entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn btn-outline" style="border-color: #fff; color: #fff;" data-i18n="locBtn">Прокласти маршрут</a>
                 </div>
                 <div class="map-frame-container">
+                    <!-- OPTIMIZATION: Added loading="lazy" for Google Maps -->
                     <iframe src="https://maps.google.com/maps?q=50.0004499,36.2213124&hl=uk&z=17&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
@@ -921,7 +947,8 @@
     <!-- Form -->
     <section id="request-form" class="request-section">
         <div class="container">
-            <div class="form-wrapper">
+            <!-- Added "reveal" class for animation -->
+            <div class="form-wrapper reveal">
                 <div class="form-header">
                     <h2 data-i18n="formTitle">Заявка на підбір</h2>
                     <p data-i18n="formDesc">Заповніть форму і ми знайдемо те, що вам потрібно</p>
@@ -934,13 +961,66 @@
                         </div>
                         <div class="form-group">
                             <label for="phone" class="form-label" data-i18n="labelPhone">Телефон</label>
-                            <input type="tel" id="phone" name="phone" class="form-input" placeholder="+38 (0XX) XXX-XX-XX" required>
+                            <!-- UPDATED: Removed initial value, kept placeholder -->
+                            <input type="tel" id="phone" name="phone" class="form-input" placeholder="+38 (0XX) XXX-XX-XX" maxlength="13" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="make" class="form-label" data-i18n="labelMake">Марка авто</label>
-                            <input type="text" id="make" name="make" class="form-input" placeholder="Наприклад: Volkswagen" data-ph="phMake" required>
+                            <!-- UPDATED: Added list attribute for autocomplete -->
+                            <input type="text" id="make" name="make" class="form-input" placeholder="Наприклад: Volkswagen" data-ph="phMake" list="car-makes" required>
+                            <!-- UPDATED: Added Datalist for car makes -->
+                            <datalist id="car-makes">
+                                <option value="Acura">
+                                <option value="Alfa Romeo">
+                                <option value="Audi">
+                                <option value="Bentley">
+                                <option value="BMW">
+                                <option value="Buick">
+                                <option value="Cadillac">
+                                <option value="Chevrolet">
+                                <option value="Chrysler">
+                                <option value="Citroen">
+                                <option value="Dacia">
+                                <option value="Daewoo">
+                                <option value="Dodge">
+                                <option value="Fiat">
+                                <option value="Ford">
+                                <option value="Geely">
+                                <option value="GMC">
+                                <option value="Honda">
+                                <option value="Hummer">
+                                <option value="Hyundai">
+                                <option value="Infiniti">
+                                <option value="Isuzu">
+                                <option value="Jaguar">
+                                <option value="Jeep">
+                                <option value="Kia">
+                                <option value="Lada">
+                                <option value="Land Rover">
+                                <option value="Lexus">
+                                <option value="Lincoln">
+                                <option value="Mazda">
+                                <option value="Mercedes-Benz">
+                                <option value="Mini">
+                                <option value="Mitsubishi">
+                                <option value="Nissan">
+                                <option value="Opel">
+                                <option value="Peugeot">
+                                <option value="Porsche">
+                                <option value="Renault">
+                                <option value="Seat">
+                                <option value="Skoda">
+                                <option value="Smart">
+                                <option value="Subaru">
+                                <option value="Suzuki">
+                                <option value="Tesla">
+                                <option value="Toyota">
+                                <option value="Volkswagen">
+                                <option value="Volvo">
+                                <option value="ZAZ">
+                            </datalist>
                         </div>
                         <div class="form-group">
                             <label for="model" class="form-label" data-i18n="labelModel">Модель</label>
@@ -954,7 +1034,8 @@
                         </div>
                         <div class="form-group">
                             <label for="vin" class="form-label" data-i18n="labelVin">VIN код</label>
-                            <input type="text" id="vin" name="vin" class="form-input" placeholder="17 символів" data-ph="phVin">
+                            <!-- UPDATED: Added minlength/maxlength and uppercase transform in CSS/JS -->
+                            <input type="text" id="vin" name="vin" class="form-input" placeholder="17 символів" data-ph="phVin" maxlength="17" minlength="17" style="text-transform: uppercase;">
                         </div>
                     </div>
                     <div class="form-group">
@@ -976,7 +1057,8 @@
     <footer>
         <div class="container">
             <a href="#" class="logo-link" style="display: inline-block; margin-bottom: 15px;">
-                <img src="logobro.png" onerror="this.src='https://placehold.co/200x50/transparent/white?text=LOGO'; this.style.opacity='0.5'" alt="BROAUTO Logo" class="logo-img" style="margin: 0 auto; height: 90px;">
+                <!-- LOGO OPTIMIZATION: Added width/height for CLS -->
+                <img src="logobro.png" onerror="this.src='https://placehold.co/200x50/transparent/white?text=LOGO'; this.style.opacity='0.5'" alt="BROAUTO Logo" class="logo-img" style="margin: 0 auto;" width="200" height="90">
             </a>
             <div class="footer-slogan"><span data-i18n="tagline1">Швидко</span>. <span data-i18n="tagline2">Точно</span>. <span style="color: var(--primary);" data-i18n="tagline3">Надійно</span>.</div>
             <p class="footer-note" style="margin-top: 20px;">&copy; 2025 BROAUTO. <span data-i18n="footerRights">Всі права захищені.</span></p>
@@ -1049,6 +1131,86 @@
                 });
             }
 
+            // --- Scroll Reveal Animation Logic ---
+            const revealElements = document.querySelectorAll('.reveal');
+            
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        // Stop observing once animated
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                root: null,
+                threshold: 0.15, // Trigger when 15% of the element is visible
+                rootMargin: "0px 0px -50px 0px" // Slight offset
+            });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            // --- Form Inputs Logic (Validation & Masks) ---
+            const phoneInput = document.getElementById('phone');
+            const vinInput = document.getElementById('vin');
+
+            // --- 1. Phone Input Logic (+380 mask) ---
+            phoneInput.addEventListener('focus', function() {
+                // If empty or just +, set prefix
+                if (!this.value || this.value === '+') {
+                    this.value = '+380';
+                }
+            });
+
+            // ADDED: Clear if user leaves without typing (restore placeholder look)
+            phoneInput.addEventListener('blur', function() {
+                if (this.value === '+380') {
+                    this.value = '';
+                }
+            });
+
+            phoneInput.addEventListener('input', function(e) {
+                let val = this.value;
+
+                // Ensure it always starts with +380
+                if (!val.startsWith('+380')) {
+                    // If user deletes part of prefix, restore it
+                    this.value = '+380';
+                    return;
+                }
+
+                // Remove non-numeric chars after the first '+'
+                // We split: '+' (index 0) and the rest
+                const prefix = '+';
+                const nums = val.substring(1).replace(/\D/g, ''); 
+                
+                // Reassemble
+                val = prefix + nums;
+
+                // Limit length: +380 (4 chars) + 9 digits = 13 chars total
+                if (val.length > 13) {
+                    val = val.slice(0, 13);
+                }
+                
+                this.value = val;
+            });
+
+            // Prevent deleting +380 via backspace if caret is there (simple UX improvement)
+            phoneInput.addEventListener('keydown', function(e) {
+                // If backspace and length is <= 4 (+380), prevent default
+                if ((e.key === 'Backspace' || e.key === 'Delete') && this.value.length <= 4) {
+                    e.preventDefault();
+                }
+            });
+
+
+            // --- 2. VIN Input Logic (Uppercase + Validation on Submit) ---
+            vinInput.addEventListener('input', function() {
+                this.value = this.value.toUpperCase(); // Force uppercase
+                // Only allow alphanumeric (optional strictness)
+                this.value = this.value.replace(/[^A-Z0-9]/g, '');
+            });
+
             // --- Telegram Form Logic ---
             const form = document.getElementById('partsForm');
             const successMsg = document.getElementById('successMsg');
@@ -1060,12 +1222,25 @@
 
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
+
+                // --- Validate VIN length if not empty ---
+                const vinValue = document.getElementById('vin').value;
+                if (vinValue && vinValue.length !== 17) {
+                    alert('VIN код має складати рівно 17 символів!');
+                    return; // Stop submission
+                }
+                
+                // --- Validate Phone length ---
+                const phoneValue = document.getElementById('phone').value;
+                if (phoneValue.length < 13) {
+                    alert('Будь ласка, введіть повний номер телефону: +380 XX XXX XX XX');
+                    return;
+                }
+
                 const name = document.getElementById('name').value;
-                const phone = document.getElementById('phone').value;
                 const make = document.getElementById('make').value;
                 const model = document.getElementById('model').value;
                 const year = document.getElementById('year').value;
-                const vin = document.getElementById('vin').value;
                 const comment = document.getElementById('comment').value;
                 const photoInput = document.getElementById('photo');
                 const file = photoInput && photoInput.files ? photoInput.files[0] : null;
@@ -1077,10 +1252,10 @@
 <b>🔥 Нова заявка ${orderId}</b>
 
 👤 <b>Ім'я:</b> ${name}
-📞 <b>Телефон:</b> ${phone}
+📞 <b>Телефон:</b> ${phoneValue}
 
 🚗 <b>Авто:</b> ${make} ${model} (${year})
-🔢 <b>VIN:</b> ${vin ? vin : 'Не вказано'}
+🔢 <b>VIN:</b> ${vinValue ? vinValue : 'Не вказано'}
 
 📝 <b>Запит:</b>
 ${comment}
@@ -1133,6 +1308,8 @@ ${comment}
                     `;
                     
                     form.reset(); 
+                    // Reset phone explicitly
+                    document.getElementById('phone').value = "+380";
                 }
                 
                 function resetButton() { submitBtn.textContent = originalBtnText; submitBtn.disabled = false; }
